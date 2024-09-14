@@ -24,13 +24,14 @@ public class CadastroDAO {
         try {
             
             Connection conexao = Conexao.conectar();
-            PreparedStatement stmt = conexao.prepareStatement("insert into professor(nome,matricula,admissao,senha,cpf,area_id) values (?,?,?,?,?,?);");
+            PreparedStatement stmt = conexao.prepareStatement("insert into professor(nome,matricula,admissao,senha,cpf,area_id,imagens) values (?,?,?,?,?,?,?);");
             stmt.setString(1, prof.getNome());
             stmt.setString(2, prof.getMatricula());
             stmt.setDate(3, prof.getAdmissao());
             stmt.setString(4, prof.getSenha());
             stmt.setString(5, prof.getCpf());
             stmt.setInt(6, prof.getArea_id());
+            stmt.setString(7, prof.getImagens());
             
             stmt.executeUpdate();
             

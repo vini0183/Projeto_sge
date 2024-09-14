@@ -13,5 +13,8 @@
     </head>
     <body>
         <h1>Hello World!</h1>
+
+        <p>id: ${id_professor}</p>
+
     </body>
 </html>

@@ -5,14 +5,22 @@
  */
 package controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Date;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import model.bean.Professor;
 import model.dao.CadastroDAO;
 
@@ -20,6 +28,7 @@ import model.dao.CadastroDAO;
  *
  * @author Senai
  */
+@MultipartConfig
 @WebServlet(name = "Controller", urlPatterns = {"/Controller", "/cadastro", "/login", "/logar", "/inicio"})
 public class Controller extends HttpServlet {
 
@@ -62,7 +71,12 @@ public class Controller extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
             
         } else if (paginaAtual.equals("/inicio")) {
-            
+            Cookie[] cookies = request.getCookies();
+            for(Cookie c: cookies) {
+                if(c.getName().equals("id_professor")) {
+                    request.setAttribute("id_professor", c.getValue());
+                }
+            }
             request.getRequestDispatcher("/WEB-INF/jsp/inicio.jsp").forward(request, response);
             
         } 
@@ -94,6 +108,29 @@ public class Controller extends HttpServlet {
             bean.setCpf(request.getParameter("cpf"));
             bean.setArea_id(Integer.parseInt(request.getParameter("area_id")));
             
+            Part filePart = request.getPart("imagens");
+            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+            
+            if(fileName != null && !fileName.isEmpty()) {
+                String basePath = getServletContext().getRealPath("/") + "assets";
+                File upload = new File(basePath);
+                if(!upload.exists()) {
+                    upload.mkdirs();
+                }
+                File file = new File(upload, fileName);
+                try (InputStream input = filePart.getInputStream()) {
+                    Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                }catch(Exception e) {
+                    e.printStackTrace();
+                }
+                bean.setImagens("assets/" + fileName);
+            }else {
+                bean.setImagens(null);
+            }
+            
+            
+            
+            
             dao.cadastrar(bean);
             
             response.sendRedirect("./login");
@@ -105,6 +142,9 @@ public class Controller extends HttpServlet {
             senha = request.getParameter("senha");
             
             if (dao.logar(cpf, senha)) {
+                Cookie cookie = new Cookie("id_professor", Integer.toString(bean.getId_professor()));
+                response.addCookie(cookie);
+                
                 response.sendRedirect("./inicio");
             } else {
                 response.sendRedirect("./login");

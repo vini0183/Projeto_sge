@@ -16,8 +16,8 @@
         <h1>Cadastrar</h1>
 
 
-        <form method="post" action="./cadastro">
-            
+        <form method="post" action="./cadastro" enctype="multipart/form-data">
+
             <div class="mb-3">
                 <label for="formGroupExampleInput" class="form-label">Nome</label>
                 <input type="text" class="form-control" id="formGroupExampleInput" name="nome">
@@ -42,11 +42,15 @@
                 <label for="formGroupExampleInput2" class="form-label">FK</label>
                 <input type="number" class="form-control" id="formGroupExampleInput2" name="area_id">
             </div>
+            <div class="input-group mb-3">
+                <input type="file" class="form-control" id="inputGroupFile02" name="imagens">
+                <label class="input-group-text" for="inputGroupFile02">Upload</label>
+            </div>
 
             <button type="submit" class="btn btn-primary">Cadastrar</button>
 
         </form>
-        
+
         <a href="./login"><button>Voltar Login</button></a>
 
 

@@ -56,11 +56,12 @@ CREATE TABLE `professor` (
   `senha` varchar(45) NOT NULL,
   `cpf` varchar(11) NOT NULL,
   `area_id` int(11) NOT NULL,
+  `imagens` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_professor`),
   UNIQUE KEY `cpf_UNIQUE` (`cpf`),
   KEY `area_id_idx` (`area_id`),
   CONSTRAINT `area_id` FOREIGN KEY (`area_id`) REFERENCES `area` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +70,7 @@ CREATE TABLE `professor` (
 
 LOCK TABLES `professor` WRITE;
 /*!40000 ALTER TABLE `professor` DISABLE KEYS */;
-INSERT INTO `professor` VALUES (9,'vini','sla','2024-08-05','1','12345678910',1),(10,'a','a','2024-03-01','1','12345678900',1);
+INSERT INTO `professor` VALUES (9,'vini','sla','2024-08-05','1','12345678910',1,NULL),(10,'a','a','2024-03-01','1','12345678900',1,NULL),(14,'b','b','2024-03-01','123','1',1,'assets/Captura de tela 2024-09-12 152246.png');
 /*!40000 ALTER TABLE `professor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,4 +91,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-05 17:22:03
+-- Dump completed on 2024-09-12 17:42:53
