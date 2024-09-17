@@ -28,7 +28,7 @@
             </div>
             <div class="mb-3">
                 <label for="formGroupExampleInput2" class="form-label">Admissão</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" name="admissao">
+                <input type="date" class="form-control" id="formGroupExampleInput2" name="admissao">
             </div>
             <div class="mb-3">
                 <label for="formGroupExampleInput" class="form-label">Senha</label>

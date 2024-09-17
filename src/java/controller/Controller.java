@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.io.File;
@@ -24,37 +19,16 @@ import javax.servlet.http.Part;
 import model.bean.Professor;
 import model.dao.CadastroDAO;
 
-/**
- *
- * @author Senai
- */
+
 @MultipartConfig
-@WebServlet(name = "Controller", urlPatterns = {"/Controller", "/cadastro", "/login", "/logar", "/inicio"})
+@WebServlet(name = "Controller", urlPatterns = {"/Controller", "/cadastro", "/login", "/logar", "/inicio", "/logout"})
 public class Controller extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -71,26 +45,18 @@ public class Controller extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
             
         } else if (paginaAtual.equals("/inicio")) {
+            
             Cookie[] cookies = request.getCookies();
             for(Cookie c: cookies) {
-                if(c.getName().equals("id_professor")) {
-                    request.setAttribute("id_professor", c.getValue());
-                }
+                request.setAttribute(c.getName(), c.getValue());
             }
+            
             request.getRequestDispatcher("/WEB-INF/jsp/inicio.jsp").forward(request, response);
             
         } 
         
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -127,10 +93,7 @@ public class Controller extends HttpServlet {
             }else {
                 bean.setImagens(null);
             }
-            
-            
-            
-            
+
             dao.cadastrar(bean);
             
             response.sendRedirect("./login");
@@ -141,24 +104,34 @@ public class Controller extends HttpServlet {
             cpf = request.getParameter("cpf");
             senha = request.getParameter("senha");
             
-            if (dao.logar(cpf, senha)) {
+            bean = dao.logar(cpf, senha);
+            
+            if (bean.getId_professor() > 0) {
                 Cookie cookie = new Cookie("id_professor", Integer.toString(bean.getId_professor()));
+                System.out.println("id: " + bean.getId_professor());
                 response.addCookie(cookie);
+                Cookie cookieNome = new Cookie("nome", bean.getNome());
+                response.addCookie(cookieNome);
+                Cookie cookieImagens = new Cookie("imagens", bean.getImagens());
+                response.addCookie(cookieImagens);
                 
                 response.sendRedirect("./inicio");
             } else {
                 response.sendRedirect("./login");
             }
             
+        } else if (paginaAtual.equals("/logout")) {
+            Cookie[] cookie = request.getCookies();
+            for(Cookie c: cookie) {
+                c.setMaxAge(0);
+                c.setValue("");
+                response.addCookie(c);
+            }
+            response.sendRedirect("./login");
         }
         
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";

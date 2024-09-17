@@ -61,7 +61,7 @@ CREATE TABLE `professor` (
   UNIQUE KEY `cpf_UNIQUE` (`cpf`),
   KEY `area_id_idx` (`area_id`),
   CONSTRAINT `area_id` FOREIGN KEY (`area_id`) REFERENCES `area` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +70,7 @@ CREATE TABLE `professor` (
 
 LOCK TABLES `professor` WRITE;
 /*!40000 ALTER TABLE `professor` DISABLE KEYS */;
-INSERT INTO `professor` VALUES (9,'vini','sla','2024-08-05','1','12345678910',1,NULL),(10,'a','a','2024-03-01','1','12345678900',1,NULL),(14,'b','b','2024-03-01','123','1',1,'assets/Captura de tela 2024-09-12 152246.png');
+INSERT INTO `professor` VALUES (9,'vini','sla','2024-08-05','1','12345678910',1,NULL),(14,'Robertinho Loko','b','2024-03-01','123','1',1,'assets/Captura de tela 2024-09-12 152246.png'),(17,'troll','troll','2024-09-18','123','1234',1,'assets/download.png'),(18,'lasgosta','a','2024-09-17','123','12345',1,'assets/lagosta.jpg');
 /*!40000 ALTER TABLE `professor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,4 +91,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-12 17:42:53
+-- Dump completed on 2024-09-17 17:24:28

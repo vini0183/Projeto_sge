@@ -14,6 +14,10 @@
     </head>
     <body>
         
+    <c:if test="${mensagemLogin != null}">
+        <h3>faz o login!</h3>
+    </c:if>
+        
         <form action="./logar" method="post">
         <div class="mb-3">
             <label for="formGroupExampleInput2" class="form-label">CPF/User</label>

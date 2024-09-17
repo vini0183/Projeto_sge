@@ -69,8 +69,8 @@ public class CadastroDAO {
         return lerArea;
     }
     
-    public boolean logar (String cpf, String senha) {
-        boolean very = false;
+    public Professor logar (String cpf, String senha) {
+            Professor prof = new Professor();
         
         try {
              Connection conexao = Conexao.conectar();
@@ -81,7 +81,16 @@ public class CadastroDAO {
            ResultSet rs = stmt.executeQuery();
            
            if(rs.next()) {
-               very = true;
+               
+               prof.setId_professor(rs.getInt("id_professor"));
+               prof.setNome(rs.getString("nome"));
+               prof.setMatricula(rs.getString("matricula"));
+               prof.setAdmissao(rs.getDate("admissao"));
+               prof.setSenha(rs.getString("senha"));
+               prof.setCpf(rs.getString("cpf"));
+               prof.setArea_id(rs.getInt("area_id"));
+               prof.setImagens(rs.getString("imagens"));
+               
            }
            
            rs.close();
@@ -91,8 +100,7 @@ public class CadastroDAO {
         }  catch(Exception e) {
             e.printStackTrace();
         }      
-                
-        return very;
+             return prof;
     }
     
     

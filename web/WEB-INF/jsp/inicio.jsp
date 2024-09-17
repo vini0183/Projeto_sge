@@ -12,9 +12,18 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
-
+        
+        
+        
+        <form method="post" action="logout">
+            <button type="submit"> Logout</button>
+        </form>
+        
         <p>id: ${id_professor}</p>
+        <p>Bem vindo Professor ${nome} !!</p>
+        <img src="${imagens}" alt="iconeProfessor"> 
+        
+        
 
     </body>
 </html>
